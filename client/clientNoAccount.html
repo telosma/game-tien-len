@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>game tiến lên</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="cli_2.js"></script>
+
+</head>
+<body>
+<div style="display: flex;">
+    <!-- form dang nhap -->
+    <!-- Nav tabs -->
+    <div class="container">
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane active" id="log_in">
+                <div class="frame container" id="login_frame">
+                    <div style="text-align: center;">
+                        <form id = 'login_form'>
+                            <div class="form-group">
+                                <label for="username" style="float:left; color: #fff;">tên người chơi</label>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="username"></input>
+                            </div>
+                            <button class="btn btn-success" id='login_btn' type="submit">đồng ý</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- danh sach cac ban choi -->
+    <table class="frame table table-striped" id="list_table_frame" style="margin: auto; margin-top: 70px;">
+    </table>
+
+    <!-- ban choi -->
+    <div class="frame" id="table_frame">
+        <div>
+            Table <div id="table_id">123</div>
+            State <div id="table_state"></div>
+        </div>
+        <!-- <button id='leave_table_btn'>Thoat</button> -->
+        <div class="content">
+            <div id="left_player" class="player_item"></div>
+            <div id="left_cards" class="left_card_list"></div>
+
+            <div id="top_player" class="player_item"></div>
+            <div id="top_cards" class="top_card_list"></div>
+
+            <div id="right_player" class="player_item"></div>
+            <div id="right_cards" class="right_card_list"></div>
+
+            <div id="bottom_player" class="player_item"></div>
+            <div id="bottom_cards" class="bottom_card_list"></div>
+
+            <div id="current_cards"></div>
+        </div>
+        <button id='start_game_btn' class="btn btn-default">bắt đầu</button>
+        <button id='danh_bai_btn' class="btn btn-default">đánh bài </button>
+        <button id='bo_luot_btn' class="btn btn-default">bỏ lượt</button>
+    </div>
+
+<!-- Chuc nang nguoi choi-->
+        <button id='btn-start' class="btn btn-default">bắt đầu</button>
+        <button id='btn-play' class="btn btn-default">đánh bài </button>
+        <button id='btn-un-select' class="btn btn-default">bỏ chọn</button>
+        <button id='btn-throw' class="btn btn-default">bỏ lượt</button>
+        <button id='btn-leave-table' class="btn btn-primary">thoát game</button>
+        <button id='btn-sort' class="btn btn-default">sắp xếp</button>
+</div>
+</body>
+</html>

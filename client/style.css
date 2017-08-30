@@ -1,0 +1,242 @@
+body {
+    background: url("faces/body_loop.gif") center top;
+}
+
+#deck{
+    /*background-color: green;*/
+    background-image: url("faces/background.jpg");
+    margin-left: 250px;
+    margin-top: 100px;
+}
+
+.frame {
+
+    position: relative;
+
+    border: 1px red solid;
+    width: 600px;
+    height: 400px;
+
+    margin-top: 100px;
+
+    overflow: auto;
+}
+
+.frame1 {
+
+    position: relative;
+
+    border: 1px red solid;
+    width: 600px;
+    height: 400px;
+
+    margin-top: 100px;
+
+    overflow: auto;
+}
+
+.nav_button{
+
+}
+
+.table_item {
+    /*border: 1px red solid;
+    /*width: 100px;*/
+    /*height: 100px;
+    margin: 20px;
+
+    display: inline-block;*/*/
+    cursor: pointer;
+}
+
+.table_item:hover {
+    background: #ccc !important;
+}
+
+
+.player_in_turn {
+    border: 1px red solid;
+
+}
+.player_out_turn {
+    background-color: blue;
+}
+
+
+/*card*/
+.card_item {
+    border: 1px red solid;
+    width: 20px;
+    height: 30px;
+    margin: 1px;
+    display: inline-block;
+    cursor: pointer;
+
+    font-size: 10px;
+
+}
+
+.card_item_selected {
+    background-color: red;
+}
+
+.left_card_item {
+    border: 1px red solid;
+    width: 30px;
+    height: 15px;
+    margin: 0px;
+    display: inline-block;
+    cursor: pointer;
+    font-size: 10px;
+}
+
+.card_item:hover {
+    background-color: blue;
+}
+
+.left_card_list {
+    border: 1px red solid;
+    position: absolute;
+    top: 0px;
+    left: 55px;
+    width: 59px;
+    height: 246px;
+    margin:
+}
+.top_card_list {
+    border: 1px red solid;
+    position: absolute;
+    top: 39px;
+    left: 121px;
+    width: 348px;
+    height: 49px;
+}
+
+.right_card_list {
+    border: 1px red solid;
+    position: absolute;
+    top: 0px;
+    left: 542px;
+    width: 59px;
+    height: 246px;
+}
+
+.bottom_card_list {
+    border: 1px red solid;
+    position: absolute;
+    top: 197px;
+    left: 121px;
+    width: 348px;
+    height: 49px;
+}
+
+/*trong ban choi*/
+
+
+.frame .content {
+    position: relative;
+}
+
+.player_item {
+    width: 40px;
+    height: 40px;
+    border: 1px red solid;
+    background-color: blue;
+    position: absolute;
+}
+
+.player_item_inturn {
+    background-color: red;
+}
+
+#left_player {
+    left: 0px;
+    top: 108px;
+}
+
+#top_player {
+    left: 215px;
+    top: 0px;
+}
+
+#right_player {
+    left: 441px;
+    top: 108px;
+}
+
+#bottom_player {
+
+    left: 215px;
+    top: 256px;
+}
+
+
+#current_cards {
+
+    position: absolute;
+    left: 215px;
+    top: 108px;
+
+}
+
+
+/*button*/
+
+#btn-play{
+    margin-top: 10px;
+    float: left;
+    position: absolute;
+    margin-left: 400px;
+    display: none;
+    /*background-color: #00ff00;*/
+}
+#btn-un-select{
+    margin-top: 10px;
+    margin-left: 570px;
+    float: left;
+    position: absolute;
+    display: none;
+    /*background-color: #00ff00;*/
+}
+#btn-start{
+    margin-top: 10px;
+    float: left;
+    position: absolute;
+    margin-left: 300px;
+    display: none;
+    /*background-color: #00ff00;*/
+}
+
+#btn-throw{
+    margin-top: 10px;
+    float: left;
+    position: absolute;
+    margin-left: 490px;
+    display: none;
+    /*background-color: #00ff00;*/
+}
+#btn-leave-table{
+    margin-top: 10px;
+    float: left;
+    position: absolute;
+    margin-left: 750px;
+    display: none;
+    /*background-color: #00ff00;*/
+}
+
+#btn-sort{
+    margin-top:  10px;
+    float: left;
+    position: absolute;
+    margin-left: 650px;
+    display: none;
+    /*background-color: #00ff00;*/
+}
+
+/*TT dang choi*/
+.stt-4 {
+    color: orange;
+}
+.stt-2 {
+    color: green;
+}
