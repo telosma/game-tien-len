@@ -330,13 +330,13 @@ function User(socket) {
         this.socket.emit('update_game-new_cycle', first_turn);
     }
 
-    this.update_game_new_turn = function (new_turn,current_cards){
+    this.update_game_new_turn = function (new_turn,current_cards) {
         this.socket.emit('update_game-new_turn', new_turn, current_cards);
     }
 }
 
 
-function Table(id){
+function Table(id) {
 
     PLAYING = 4;
     READY = 1;
@@ -348,7 +348,7 @@ function Table(id){
     this.players = [];
     var to;
 
-    for(var i =0; i < 4 ; i++){
+    for(var i = 0; i < 4 ; i++){
         this.players[i] = null;
     }
 
@@ -360,8 +360,8 @@ function Table(id){
     this.get_num_players = function() {
         var count =0;
 
-        for(var i in this.players){
-            if(this.players[i]){
+        for(var i in this.players) {
+            if (this.players[i]) {
                 count += 1;
             }
         }
@@ -394,9 +394,9 @@ function Table(id){
             table_info.current_cards = this.current_cards;
             table_info.current_turn = this.players[this.current_turn].id;
 
-        }else{
-            for( var i in this.players){
-                if(this.players[i]){
+        } else {
+            for(var i in this.players) {
+                if (this.players[i]) {
                     players[i] = {
                         'id':this.players[i].id,
                         'username': this.players[i].username,
@@ -405,33 +405,34 @@ function Table(id){
                 }
 
             }
+
             table_info.players = players;
         }
 
         return table_info;
     }
-    //action
 
     // them nguoi choi vao ban
     this.add_player = function(player) {
         // tim vi tri con trong
         var empty_slot = null;
-        for(var i in this.players){
-            if(this.players[i] == null){
+        for (var i in this.players) {
+            if (this.players[i] == null) {
                 empty_slot = i;
                 break;
             }
         }
 
-        if(empty_slot == null){
+        if (empty_slot == null) {
             return false;
         }
 
         if (this.get_num_players() == 0) {
             player.timein = 1;
-        }else{
+        } else {
             player.timein = 1;
-            for (var i in this.players){
+
+            for (var i in this.players) {
                 if (this.players[i]) {
                     player.timein += this.players[i].timein;
                 }
@@ -439,7 +440,7 @@ function Table(id){
         }
 
         // kiem tra nguoi choi da o trong ban hay chua
-        if(this.players.indexOf(player) != -1 ){
+        if (this.players.indexOf(player) != -1 ) {
             return false;
         }
 
@@ -454,14 +455,15 @@ function Table(id){
         // neu khong thi la trang thai nguoi choi
         if (this.state == PLAYING) {
             player.state = VISITOR;
-        }else{
+        } else {
             player.state = PLAYER;
         }
 
         //update thong tin toan bo player trong ban
         for (var i in this.players) {
-            if(this.players[i])
-                this.players[i].update_user_go_table(player.id,player.username,player.position);
+            if(this.players[i]) {
+                this.players[i].update_user_go_table(player.id, player.username, player.position);
+            }
         }
 
         // tim ra chu phong neu nhu chua xac dinh
@@ -473,10 +475,11 @@ function Table(id){
     }
 
     // Xac dinh id cua chu phong
-    this.getOwnerId = function(){
+    this.getOwnerId = function() {
         _ownerid = null;
         var _timein = 1000000;
-        for (var p in this.players){
+
+        for (var p in this.players) {
             if (this.players[p]){
                 if (_timein > this.players[p].timein){
                     _timein = this.players[p].timein;
@@ -487,6 +490,7 @@ function Table(id){
 
         return _ownerid;
     }
+
     // loai bo nguoi choi khoi ban
     this.remove_player = function(player) {
         var _pid = player.id;
@@ -500,27 +504,28 @@ function Table(id){
         // loai bo nguoi choi ra khoi ban
         this.players[this.players.indexOf(player)] = null;
 
-        if (this.ownerId == _pid){
+        if (this.ownerId == _pid) {
             this.ownerId = null;
             this.ownerId =  this.getOwnerId();
         }
 
-        if (this.state == READY){
-            if (this.getNumPlayer < 2){
+        if (this.state == READY) {
+            if (this.getNumPlayer < 2) {
                 this.state = UNREADY;
             }
         }
 
         // updatethong tin cho cac thanh vien trong ban
-        for(var i in this.players){
-            if(this.players[i])
+        for (var i in this.players) {
+            if (this.players[i]) {
                 this.players[i].update_user_leave_table(_pid);
+            }
         }
 
-        if (this.state == PLAYING){
-            if( this.is_finish_game){
+        if (this.state == PLAYING) {
+            if (this.is_finish_game) {
                 this.finish_game();
-            }else if(this.is_finish_cycle){
+            } else if (this.is_finish_cycle) {
                 this.is_finish_cycle();
             }
         }
@@ -530,9 +535,8 @@ function Table(id){
 
     // tao vong choi moi
     this.new_cycle = function() {
-        if (this.state == PLAYING){
+        if (this.state == PLAYING) {
             console.log('tao vong choi moi');
-
             // tim nguoi choi dau tien tiep theo trong vong
             var first_turn = null;
 
@@ -565,11 +569,11 @@ function Table(id){
 
             // cap nhat thong tin
             var thistb = this;
-            for(i in this.players){
-                if(this.players[i]){
+            for (let i in this.players) {
+                if (this.players[i]) {
                     this.players[i].update_game_new_cycle(this.players[this.current_turn].id);
 
-                    if(i == this.current_turn){
+                    if (i == this.current_turn) {
                         console.log('ham set timeout 20s');
 
                         this.to = setTimeout(function(){
@@ -605,16 +609,16 @@ function Table(id){
         this.current_cards = null;
 
         // cap nhat thong tin toi cac thanh vien
-        for(var i in this.players){
+        for (var i in this.players) {
             if(this.players[i]){
-                this.players[i].update_game_start(this.get_table_info(),this.players[i].cards);
+                this.players[i].update_game_start(this.get_table_info(), this.players[i].cards);
             }
         }
 
         // tat ca moi nguoi deu trong vong choi
-        for(i in this.players){
-            if(this.players[i]){
-                if(this.players[i].cards.length > 0) {
+        for (i in this.players) {
+            if (this.players[i]) {
+                if (this.players[i].cards.length > 0) {
                     this.players[i].is_in_cycle = true;
                 }else{
                     this.players[i].is_in_cycle = false;
@@ -625,14 +629,15 @@ function Table(id){
         }
 
         // cap nhat thong tin bat dau mot vong choi moi
-        for(i in this.players){
-            if(this.players[i]){
+        for (i in this.players) {
+            if (this.players[i]) {
                 this.players[i].update_game_new_cycle(this.players[this.current_turn].id);
             }
         }
 
         // setTimeout cho luot cua nguoi choi dau tien
         var thistb = this;
+
         this.to = setTimeout(function(){
                     thistb.players[thistb.current_turn].bo_luot();
                 }, 20000);
@@ -649,7 +654,7 @@ function Table(id){
         }
 
         // chia bai cho tung nguoi
-        for( var u in this.players){
+        for (var u in this.players) {
             if(this.players[u]){
                 this.players[u].cards = [];
 
@@ -671,15 +676,15 @@ function Table(id){
         var stt = {};
 
         table_info.players.forEach(function(p) {
-            if(p){
+            if (p) {
                 exist_card += p.num_cards;
                 num_player ++;
             }
         })
 
         table_info.players.forEach(function(p) {
-            if(p){
-                if (num_player == 1){
+            if (p) {
+                if (num_player == 1) {
                     p['opposite_score'] = 10;
                 }else{
                     p['opposite_score'] = (p.num_cards + exist_card);
@@ -695,7 +700,7 @@ function Table(id){
         this.new_game();
 
         this.players.forEach(function(p) {
-            if(p){
+            if (p) {
                 p.update_game_finish(table_info);
                 p.state = PLAYER;
             }
@@ -703,12 +708,12 @@ function Table(id){
     }
 
     // tao game moi, cac nguoi choi o trang thai chuan bi choi
-    this.new_game = function(){
+    this.new_game = function() {
         var _numplayer = 0;
 
         // cap nhat lai trang thai cac nguoi choi
         this.players.forEach(function(p) {
-            if(p){
+            if (p) {
                 p.state = PLAYER;
                 p.cards = [];
                 p.is_in_cycle = true;
@@ -726,7 +731,7 @@ function Table(id){
 
         // cap nhat thong tin toi cac thanh vien
         this.players.forEach(function(p) {
-            if(p){
+            if (p) {
                 // p.update_game_new_game(this.get_table_info);
             }
         })
@@ -756,10 +761,9 @@ function Table(id){
 
             // neu so nguoi con bai la 1 hoac 0 thi van choi da ket thuc
             var count = 0;
-            for(var i in this.players){
-                if ( (this.players[i]) && (this.players[i].state == PLAYING) && (this.players[i].cards.length == 0) ){
+            for (var i in this.players) {
+                if ((this.players[i]) && (this.players[i].state == PLAYING) && (this.players[i].cards.length == 0)) {
                     return true;
-
                 }
 
                 if( (this.players[i])  && (this.players[i].cards.length > 0) ){
@@ -767,7 +771,7 @@ function Table(id){
                 }
             }
 
-            if(count == 0 || count == 1){
+            if (count == 0 || count == 1) {
                 return true;
             }
 
@@ -855,13 +859,13 @@ function Table(id){
 
 
     this.check_cards = function(cards,current_cards){
-        if( ! cards || cards.length == 0){
+        if (!cards || cards.length == 0) {
             return false;
         }
 
         cards = getCards(cards);
 
-        if ( current_cards == null) {
+        if (current_cards == null) {
             if (cards.length == 1)
                 return true;
             else if (la_bo_doi(cards))
@@ -876,39 +880,39 @@ function Table(id){
         current_cards = getCards(current_cards);
 
         // quan bai don
-        if(current_cards.length == 1){
+        if (current_cards.length == 1) {
             // quan bai hien tai la 2
-            if( current_cards[0].number == 15){
-                if( cards.length == 1){
-                    if( cards[0].number == 15 && cards[0].rank > current_cards[0].rank){
+            if (current_cards[0].number == 15) {
+                if ( cards.length == 1) {
+                    if (cards[0].number == 15 && cards[0].rank > current_cards[0].rank) {
                         return true;
-                    }else {
+                    }else{
                         return false;
                     }
-                }else if( la_tu_quy(cards)){
+                }else if (la_tu_quy(cards)) {
                     return true;
-                }else {
+                }else{
                     return false;
                 }
-            }else if (cards.length == 1){
+            }else if (cards.length == 1) {
                 if (cards[0].number == 15)
                     return true;
-                if ( (cards[0].number > current_cards[0].number) && (cards[0].rank == current_cards[0].rank) ){
+                if ((cards[0].number > current_cards[0].number) && (cards[0].rank == current_cards[0].rank)) {
                     return true;
                 }
-            }else if( la_tu_quy(cards)){
+            }else if ( la_tu_quy(cards)) {
                 return true;
-            }else {
+            }else{
                 return false;
             }
         }
 
         // bo doi
         if (la_bo_doi(current_cards)) {
-            if ( cards.length == 2 && cards[0].number == 15 && cards[1].number == 15) {
+            if (cards.length == 2 && cards[0].number == 15 && cards[1].number == 15) {
                 return true;
-            } else if(la_bo_doi(cards)) {
-                if (so_sanh_bo(cards,current_cards) > 0 ) {
+            }else if (la_bo_doi(cards)) {
+                if (so_sanh_bo(cards,current_cards) > 0) {
                     return true;
                 } else {
                     return false;
@@ -934,7 +938,7 @@ function Table(id){
         }
 
         // tu quy
-        if( la_tu_quy(current_cards) && la_tu_quy){
+        if (la_tu_quy(current_cards) && la_tu_quy) {
             if (so_sanh_bo(cards,current_cards) > 0) {
                 return true;
             } else {
@@ -959,7 +963,7 @@ function Table(id){
     }
 
     function la_bo_ba(cards) {
-        if(cards.length != 3){
+        if (cards.length != 3) {
             return false;
         }
 
@@ -971,7 +975,6 @@ function Table(id){
     }
 
     function so_sanh_bo(cards1,cards2){
-
         if(cards1.length != cards2.length){
             return false;
         }
@@ -1001,80 +1004,74 @@ function Table(id){
         }
 
         // so sanh chat ( cac quan bai 2 bo phai du chat cua nhau )
-        for(var i=0; i< cards1.length;i++){
-            if(cards1[i].rank != cards2[i].rank){
+        for (var i = 0; i < cards1.length; i++) {
+            if (cards1[i].rank != cards2[i].rank) {
                 return false;
             }
         }
+
         //so sanh bo doi
-            if (cards1[0].rank != cards2[0].rank){
-                return 0;
-            }
-            else if (cards1[0].number > cards2[0].number){
-                return 1;
-            }
-            else if (cards1[0].number < cards2[0].number){
-                return -1;
-            }
+        if (cards1[0].rank != cards2[0].rank) {
+            return 0;
+        }else if (cards1[0].number > cards2[0].number) {
+            return 1;
+        }else if (cards1[0].number < cards2[0].number) {
+            return -1;
+        }
     }
 
-    function la_bo_doi(cards){
-        if(cards.length != 2){
+    function la_bo_doi(cards) {
+        if (cards.length != 2) {
             return false;
         }
 
-        if( cards[0].number == cards[1].number){
-            if (cards[0].number == 15)
-                return true;
-            if( cards[0].rank == 0 && cards[1].rank == 1){
+        if(cards[0].number == cards[1].number) {
+            if (cards[0].number == 15) {
                 return true;
             }
 
-            else if( cards[0].rank == 1 && cards[1].rank == 0){
+            if (cards[0].rank == 0 && cards[1].rank == 1) {
                 return true;
-            }
-
-            else if(cards[0].rank == 2 && cards[1].rank == 3){
+            }else if (cards[0].rank == 1 && cards[1].rank == 0) {
                 return true;
-            }
-
-            else if(cards[0].rank ==3 && cards[1].rank == 2){
+            }else if (cards[0].rank == 2 && cards[1].rank == 3) {
+                return true;
+            }else if (cards[0].rank ==3 && cards[1].rank == 2) {
                 return true;
             }
 
             return false;;
-        }
-        else
+        }else{
             return false;
+        }
     }
 
 
     function la_tu_quy(cards){
-
-        if(cards.length != 4){
+        if (cards.length != 4) {
             return false;
         }
 
-        if( cards[0].number == cards[1].number
+        if (cards[0].number == cards[1].number
             && cards[0].number == cards[2].number
-            && cards[0].number == cards[3].number){
+            && cards[0].number == cards[3].number)
+        {
             return true;
-        }
-        else
+        }else{
             return false;
-
+        }
     }
 
     function la_bo_day(cards) {
-        if(cards.length < 3 ){
+        if (cards.length < 3) {
             return false;
         }
 
         // kiem tra co cung chat hay khong
         var rank = cards[0].rank;
 
-        for(var i= 1 ; i< cards.length;i++){
-            if(cards[i].rank !== rank){
+        for (var i = 1 ; i < cards.length; i++) {
+            if (cards[i].rank !== rank) {
                 console.log('yc bo day phai dong chat');
                 return false;
             }
