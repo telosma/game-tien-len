@@ -137,7 +137,7 @@ function User(socket) {
         this.socket.emit("receive_notice", notice);
     }
 
-    this.login = function(username,password) {
+    this.login = function(username, password) {
 
         /*
         *
@@ -995,9 +995,9 @@ function Table(id) {
             if (cards1.length == 2){
                 if ( (cards1[0].rank > cards2[0].rank) && (cards1[1].rank > cards2[1].rank) ) {
                     return 1;
-                }else if( ( cards1[0].rank < cards2[0].rank) && (cards1[1].rank < cards2[1].rank) ) {
+                } else if (( cards1[0].rank < cards2[0].rank) && (cards1[1].rank < cards2[1].rank)) {
                     return -1;
-                }else {
+                } else {
                     return 0;
                 }
             }
@@ -1013,9 +1013,9 @@ function Table(id) {
         //so sanh bo doi
         if (cards1[0].rank != cards2[0].rank) {
             return 0;
-        }else if (cards1[0].number > cards2[0].number) {
+        } else if (cards1[0].number > cards2[0].number) {
             return 1;
-        }else if (cards1[0].number < cards2[0].number) {
+        } else if (cards1[0].number < cards2[0].number) {
             return -1;
         }
     }
@@ -1025,18 +1025,18 @@ function Table(id) {
             return false;
         }
 
-        if(cards[0].number == cards[1].number) {
+        if (cards[0].number == cards[1].number) {
             if (cards[0].number == 15) {
                 return true;
             }
 
             if (cards[0].rank == 0 && cards[1].rank == 1) {
                 return true;
-            }else if (cards[0].rank == 1 && cards[1].rank == 0) {
+            } else if (cards[0].rank == 1 && cards[1].rank == 0) {
                 return true;
-            }else if (cards[0].rank == 2 && cards[1].rank == 3) {
+            } else if (cards[0].rank == 2 && cards[1].rank == 3) {
                 return true;
-            }else if (cards[0].rank ==3 && cards[1].rank == 2) {
+            } else if (cards[0].rank ==3 && cards[1].rank == 2) {
                 return true;
             }
 
@@ -1057,7 +1057,7 @@ function Table(id) {
             && cards[0].number == cards[3].number)
         {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -1079,13 +1079,11 @@ function Table(id) {
 
         // kiem tra xem co phai lien tiep nhau hay khong
         sortCardByNumber(cards);
-        console.log(sortCardByNumber(cards));
         for(var i=0; i< cards.length -1; i++){
             if (cards[i].number == 15 || cards[i+1] == 15 ){
                 console.log('bo day khong duoc chua la bai 2');
                 return false;
-            }
-            else if(cards[i].number != cards[i+1].number-1){
+            } else if(cards[i].number != cards[i+1].number-1) {
                 console.log('yc bo day phai la cac la bai lien nhau');
                 return false;
             }
@@ -1094,12 +1092,12 @@ function Table(id) {
         return true;
     }
 
-    function so_sanh_bo_day(cards1,cards2){ // true neu bo day 1  > bo day 2
-        if(cards1.length != cards2.length){
+    function so_sanh_bo_day(cards1,cards2) {
+        if (cards1.length != cards2.length) {
             return false;
         }
 
-        if(cards1[0].rank != cards2[0].rank){
+        if (cards1[0].rank != cards2[0].rank) {
             return false;
         }
 
@@ -1108,7 +1106,7 @@ function Table(id) {
 
         if(cards1[0].number > cards2[cards2.length-1].number){
             return 1;
-        }else if(cards1[cards1.length-1].number < cards2[0].number){
+        } else if (cards1[cards1.length-1].number < cards2[0].number) {
             return -1
         } else {
             return 0;
@@ -1117,16 +1115,15 @@ function Table(id) {
 
     // sap xep tang dan
     function sort_cards(cards){
-
         return sort(cards,function(card){
             return card.number;
         })
     }
 
     function sort(list,get_value_function){
-        for(var i=0; i< list.length-1;i++){
+        for(var i=0; i < list.length-1; i++){
             for(var j=0; j < list.length;j++){
-                if(get_value_function(list[i]) > get_value_function(list[j])){
+                if (get_value_function(list[i]) > get_value_function(list[j])) {
                     var tmp = list[i];
                     list[i] = list[j];
                     list[j] = tmp;
@@ -1137,9 +1134,9 @@ function Table(id) {
     }
 
     function sortCardByNumber(cards){
-        for (var i= cards.length; i > 0; i--){
-            for (var j = 0; j < i-1; j++){
-                if (cards[j].number > cards[j+1].number){
+        for (var i= cards.length; i > 0; i--) {
+            for (var j = 0; j < i-1; j++) {
+                if (cards[j].number > cards[j+1].number) {
                     var tmp = cards[j];
                     cards[j] = cards[j+1];
                     cards[j+1] = tmp;
@@ -1150,15 +1147,16 @@ function Table(id) {
     }
 
     function sortCardByRank(cards){
-        for (var i= cards.length; i > 0; i--){
-            for (var j = 0; j < i-1; j++){
-                if (cards[j].rank > cards[j+1].rank){
+        for (var i = cards.length; i > 0; i--) {
+            for (var j = 0; j < i-1; j++) {
+                if (cards[j].rank > cards[j+1].rank) {
                     var tmp = cards[j];
                     cards[j] = cards[j+1];
                     cards[j+1] = tmp;
                 }
             }
         }
+
         return cards;
     }
     // chuyen doi gia tri quan bai
@@ -1170,41 +1168,38 @@ function Table(id) {
 
     function getCards(cards){
         var result =[];
-        cards.forEach(function(card) {
+
+        cards.forEach (function(card) {
             result.push(getCard(card));
         })
+
         return result;
     }
 
     // so sanh cac quan bai
     function cmpCard(card1,card2){ // tra ve true neu card1 > card2 va false neu nguoc lai
-        if (card1.number == 15){
-            if (card2.number == 15){
+        if (card1.number == 15) {
+            if (card2.number == 15) {
                 if (card1.rank > card2.rank){
                     return true;
-                }
-                else if (card1.rank < card2.rank) {
+                } else if (card1.rank < card2.rank) {
                     return false;
                 }
-            }
-            else {
+            } else {
                 return true;
             }
-        }else if ( (card1.number > card2.number) && (card1.rank == card2.rank) ){
+        } else if ( (card1.number > card2.number) && (card1.rank == card2.rank) ){
             return true;
-        }
-        else if (card1.number == card2.number){
-            if (card1.rank > card2.rank){
+        } else if (card1.number == card2.number) {
+            if (card1.rank > card2.rank) {
                 return true;
-            }else { return false;}
+            } else { return false; }
         }
     }
 
     this.bo_luot = function(player) {
-
         // khong den luot choi thi khong duoc phep
-        if( this.players[this.current_turn] != player){
-            console.log('bo luot that bai ! khong phai luot choi cua player');
+        if (this.players[this.current_turn] != player) {
             return false;
         }
 
@@ -1219,26 +1214,20 @@ function Table(id) {
         clearTimeout(this.to);
 
         // chuyen turn sang nguoi choi moi
-
-        if(this.is_finish_game()){
+        if (this.is_finish_game()) {
             this.finish_game();
-        }else if ( this.is_finish_cycle()){
+        } else if (this.is_finish_cycle()) {
             this.new_cycle();
         } else {
             console.log('this.new_turn()');
             this.new_turn();
-            console.log('tao luot choi moi xong ');
-
         }
+
         return true;
     }
 
-
     // bat dau mot luot choi moi
     this.new_turn = function() {
-
-        console.log('tao luot moi ');
-
         // tim nguoi tiep theo
         var i = this.current_turn + 1;
         if( i >= 4){
@@ -1246,18 +1235,16 @@ function Table(id) {
         }
 
         while(true){
-            console.log('xet position : ' + i);
             if(this.players[i] && this.players[i].cards.length > 0 ){
-                if( i == this.current_turn){
-                    console.log('co loi trong new turn 1');
+                if (i == this.current_turn) {
                     return false;
                 }
 
-                if( this.players[i].is_in_cycle){
+                if (this.players[i].is_in_cycle) {
                     break;
                 }else{
                     i += 1;
-                    if(i >= 4){
+                    if (i >= 4) {
                         i=0;
                     }
                 }
@@ -1288,6 +1275,7 @@ function Table(id) {
 
                 this.players[i].update_game_new_turn(this.players[this.current_turn].id);
             }
+
             if(i == this.current_turn){
                 console.log('ham set timeout 20s');
                 this.to = setTimeout(function(){
@@ -1298,11 +1286,13 @@ function Table(id) {
     }
     this.getNumPlayer = function(){
         var _np = 0;
+
         for (var p in this.players){
             if (this.players[p]){
                 _np++;
             }
         }
+
         return _np;
     }
 
