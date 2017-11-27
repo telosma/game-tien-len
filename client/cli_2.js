@@ -35,14 +35,13 @@
         3 : 'Chua san sang'
     }
 
-// var socket = io('http://localhost:8000');
 var socket = io.connect();
 
-socket.on('receive_notice',function(notice){
+socket.on('receive_notice', function(notice) {
     alert(notice);
 })
 
-socket.on('login_success',function(list_table_info){
+socket.on('login_success', function(list_table_info) {
     for(var i in list_table_info ){
         var table = list_table_info[i];
     }
@@ -52,7 +51,7 @@ socket.on('login_success',function(list_table_info){
     showListTableFrame();
 })
 
-socket.on('go_table_success',function(table_info,my_position){
+socket.on('go_table_success', function(table_info, my_position) {
     $('.frame').hide();
     $('#nav').hide();
     $('#btn-leave-table').show();
@@ -60,6 +59,7 @@ socket.on('go_table_success',function(table_info,my_position){
     table = new Table(table_info,my_position);
     table.preLoadImages();
     table.drawPlayer();
+
     if (table.state == PLAYING) {
         table.load_cards(table_info);
     }
@@ -114,7 +114,7 @@ socket.on('update_user-go_table', function(id, username, position) {
     }
 })
 
-socket.on('update_user-leave_table', function(table_info,id) {
+socket.on('update_user-leave_table', function(table_info, id) {
     table.drawPlayer();
 
     if(table) {
@@ -167,7 +167,7 @@ socket.on('update_game-finish', function(table_info) {
 
     var stt = 0;
 
-    for (var opposite_score in table_info.stt){
+    for (var opposite_score in table_info.stt) {
         if (table.bplayer.id == table_info.stt[opposite_score]) {
             switch (stt) {
                 case 0:
@@ -254,7 +254,7 @@ function showListTableFrame() {
     showFrame('list_table_frame');
 }
 
-function updateListTable(list_table_info)  {
+function updateListTable(list_table_info) {
     var content = $('#list_table_frame');
     content.html('');
     var status;
@@ -315,12 +315,13 @@ function getCard(card) {
 }
 
 function getCards(cards) {
-        var result =[];
-        cards.forEach(function(card) {
-            result.push(getCard(card));
-        })
-        return result;
-    }
+    var result = [];
+    cards.forEach(function(card) {
+        result.push(getCard(card));
+    })
+
+    return result;
+}
 
 
 
@@ -330,11 +331,18 @@ $(document).ready(function() {
     $('#login_frame').show();
 
     $('#register_form').submit(function() {
-        socket.emit('register', $('#register_form #username').val(), $('#register_form #password').val(), $('#firstname').val(), $('#lastname').val());
+        let username = $('#register_form #username').val();
+        let password = $('#register_form #password').val();
+        let firstname = $('#firstname').val();
+        let lastname = $('#lastname').val();
+
+        socket.emit('register', username, password, firstname, lastname);
     })
 
     $('#login_form').submit(function() {
-        socket.emit('login',$('#login_form #username').val(), $('#login_form #password').val());
+        let username = $('#login_form #username').val();
+        let password = $('#login_form #password').val();
+        socket.emit('login', username, password);
 
         return false;
     });
@@ -350,33 +358,31 @@ $(document).ready(function() {
     })
 
     $(document).on('click', '#btn-start', function() {
-
         socket.emit('start_game');
     })
 
-    $(document).on('click', '#btn-play', function(){
+    $(document).on('click', '#btn-play', function() {
         table.sec = 400;
         socket.emit('danh_bai', obj2Arr(table.bplayer.slCard));
     })
 
-    $(document).on('click', '#btn-un-select', function(){
+    $(document).on('click', '#btn-un-select', function() {
         table.bplayer.slCard = {};
     })
 
-    $(document).on('click', '#btn-throw', function(){
+    $(document).on('click', '#btn-throw', function() {
         table.sec = 400;
         table.stop_count_down = true;
         socket.emit('bo_luot');
     })
 
-    $(document).on('click', '#btn-sort', function(){
+    $(document).on('click', '#btn-sort', function() {
         table.bplayer.slCard = {};
         var arr_card_value = obj2Arr(table.bplayer.myCard);
         var cards = getCards(obj2Arr(table.bplayer.myCard));
         var count = 0;
-        for (var i = 0;i < cards.length-1; i++){
-            if (cards[i].number > cards[i+1].number)
-            {
+        for (var i = 0;i < cards.length-1; i++) {
+            if (cards[i].number > cards[i+1].number) {
                 break;
             } else {
                 count ++;
@@ -412,7 +418,6 @@ $(document).ready(function() {
                         sorted_arr_card.push(arr_card_value[i-2]);
                         arr_card_value[i-2] = null;
                     }
-                    // arr_card_value.splice(i-2, 4);
                 }
             }
 
