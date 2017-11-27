@@ -68,7 +68,7 @@ function Database(){
         return this.id;
     }
 
-    this.register = function(username, password, firstname, lastname){
+    this.register = function(username, password, firstname, lastname) {
         this.id += 1;
         return this.id;
     }
@@ -147,14 +147,10 @@ function User(socket) {
         *
         */
 
-        console.log('username: ' + username);
-        console.log('password: ' + password);
-        var thisurs = this;
-            this.id = database.login(username, password) ;
-            this.username = username;
-            this.receive_notice('Tao tai khoan thanh cong');
-            this.socket.emit('login_success',get_list_table_info());
-            console.log('user dang nhap thanh cong');
+        this.id = database.login(username, password) ;
+        this.username = username;
+        this.receive_notice('Tao tai khoan thanh cong');
+        this.socket.emit('login_success', get_list_table_info());
         //=============================================//
 
 
@@ -168,7 +164,6 @@ function User(socket) {
     }
 
     this.register = function(username, password, firstname, lastname) {
-        var thisusr  = this;
         var newuser = new Account();
         newuser.username = username;
         newuser.password = password;
@@ -178,13 +173,13 @@ function User(socket) {
         console.log('username: ' + username);
         console.log('firstname: ' + newuser.firstname);
         console.log('lastname: ' + newuser.lastname);
-        newuser.save(function(err, savedUser){
+        newuser.save((err, savedUser) => {
             if (err) {
-                thisusr.receive_notice('email hoac mat khau khong hop le');
+                this.receive_notice('email hoac mat khau khong hop le');
                 return false;
             }
             if (savedUser) {
-                thisusr.receive_notice('ban da dang ky thanh cong');
+                this.receive_notice('ban da dang ky thanh cong');
                 console.log('nguoi choi dang ky thanh cong');
                 return false;
             }
@@ -610,7 +605,7 @@ function Table(id) {
 
         // cap nhat thong tin toi cac thanh vien
         for (var i in this.players) {
-            if(this.players[i]){
+            if (this.players[i]) {
                 this.players[i].update_game_start(this.get_table_info(), this.players[i].cards);
             }
         }
@@ -620,7 +615,7 @@ function Table(id) {
             if (this.players[i]) {
                 if (this.players[i].cards.length > 0) {
                     this.players[i].is_in_cycle = true;
-                }else{
+                } else {
                     this.players[i].is_in_cycle = false;
                 }
 
